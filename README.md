@@ -2,7 +2,7 @@
 DigiWeek-2022 Treasure-Hunt
 pip install django
 
-cd Treasure-Hunt/treasure_hunt
+cd Treasure-Hunt/
 
 python manage.py runserver
 
