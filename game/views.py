@@ -36,18 +36,14 @@ def QRTokenView(request, qrtoken):
 
 			if team and question:
 
-				tbno = ""
-				qbno = ""
-				qsno = ""
-				tdone = ""
 
-				for i in team:
-					tbno = i.tbno
-					tdone = i.tdone
+				get_team = Team.objects.get(tcode = tcode)
+				get_question = Questions.objects.get(qtoken = qrtoken)
 
-				for i in question:
-					qbno = i.qbno
-					qsno = i.qsno
+				tbno = get_team.tbno
+				qbno = get_question.qbno
+				qsno = get_question.qsno
+				tdone = get_team.tdone
 
 
 				if tbno == qbno:
@@ -63,7 +59,13 @@ def QRTokenView(request, qrtoken):
 						entry.save()
 
 						messages.success(request, "Correct Answer!")
-						return render(request, "game/index.html", {"qrtoken": qrtoken, "form": form})
+						return render(request, "game/index.html", {"qrtoken": qrtoken, "form": form, "link": get_question.nextlink})
+
+
+					elif qsno <= (tdone):
+
+						messages.success(request, "Already Solved!")
+						return render(request, "game/index.html", {"qrtoken": qrtoken, "form": form, "link": get_question.nextlink})
 
 
 					else:

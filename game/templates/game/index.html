@@ -48,6 +48,9 @@
     </div>
   </header>
 
+  {% if link %}
+    <h6>Link to <a href="{{link}}"> next riddle</a></h6>
+  {% endif %}
 
   {% if messages %}
   <ul class="messages">
