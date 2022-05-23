@@ -2,19 +2,22 @@ from django.shortcuts import render
 from django import forms
 from .models import Team, Entries, Questions
 from django.contrib import messages
+from captcha.fields import CaptchaField
 
 
 
 class RegisterForm(forms.Form):
 
     tcode = forms.CharField(max_length = 255, required=False, label = "Team Code", widget = forms.TextInput(
-
     attrs = {
 
         'class':'form-control text-center',
         'placeholder':'abc@12',
 
     }))
+
+    captcha = CaptchaField()
+
 
 
 # Create your views here.
@@ -24,9 +27,11 @@ def QRTokenView(request, qrtoken):
 
 		form = RegisterForm(request.POST)
 
+		flag = True
+
+
 		if form.is_valid():
 
-			flag = True
 
 			tcode = form.cleaned_data['tcode']
 
@@ -91,3 +96,6 @@ def QRTokenView(request, qrtoken):
 
 	form = RegisterForm()
 	return render(request, "game/index.html", {"qrtoken": qrtoken, "form": form})
+
+
+
